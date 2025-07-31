@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats de Prédiction en Masse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .nav-links a {
+            color: #3b82f6;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .nav-links a:hover {
+            background-color: #e0f2fe;
+            color: #1d4ed8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to table content */
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0; /* Light gray border */
+            text-align: left;
+        }
+        th {
+            background-color: #edf2f7; /* Light gray header */
+            font-weight: 700;
+            color: #2d3748; /* Darker text */
+            text-transform: uppercase;
+            font-size: 0.875rem; /* text-sm */
+        }
+        tr:nth-child(even) {
+            background-color: #f7fafc; /* Lighter row background */
+        }
+        .btn-download, .btn-back {
+            background-image: linear-gradient(to right, #4ade80, #22c55e); /* Green gradient */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+            display: inline-block; /* For margin and centering */
+            margin: 1rem 0.5rem;
+        }
+        .btn-download:hover, .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(34, 197, 94, 0.4);
+        }
+        .btn-back {
+            background-image: linear-gradient(to right, #60a5fa, #3b82f6); /* Blue gradient */
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .btn-back:hover {
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+        .btn-excel {
+            background-image: linear-gradient(to right, #10b981, #059669); /* Different shade of green for Excel */
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
+        .btn-excel:hover {
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        }
+        .scrollable-table-container {
+            max-height: 400px; /* Adjust as needed */
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container p-8 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                Résultats de Prédiction en Masse
+            </span>
+        </h1>
+
+        <div class="nav-links">
+            <a href="/">Prédiction Individuelle</a>
+            <a href="/upload">Prédiction de Fichier</a>
+        </div>
+
+        <p class="text-gray-700 text-lg mb-4">
+            Prédictions effectuées pour <span class="font-bold">{{ total_rows }}</span> clients.
+        </p>
+        <p class="text-gray-600 text-sm mb-6">
+            Voici les 10 premières lignes des résultats. Téléchargez le fichier pour voir toutes les prédictions.
+        </p>
+
+        <div class="scrollable-table-container">
+            {{ table | safe }}
+        </div>
+
+        <div class="flex justify-center mt-8">
+            <a href="/download_results?format=csv" class="btn-download mr-4">Télécharger en CSV</a>
+            <a href="/download_results?format=xlsx" class="btn-download btn-excel">Télécharger en Excel</a>
+            <a href="/upload" class="btn-back ml-4">Nouvelle prédiction de fichier</a>
+        </div>
+    </div>
+</body>
+</html>

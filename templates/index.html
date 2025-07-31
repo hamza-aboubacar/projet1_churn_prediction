@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédicteur de Désabonnement Client</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #334155; /* Darker text for labels */
+        }
+        .form-group select,
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1; /* Light gray border */
+            border-radius: 8px;
+            margin-top: 0.25rem;
+            font-size: 1rem;
+            color: #1e293b; /* Dark text for input */
+            transition: border-color 0.2s;
+        }
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6; /* Blue focus border */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .btn-submit {
+            background-image: linear-gradient(to right, #4ade80, #22c55e); /* Green gradient */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(34, 197, 94, 0.4);
+        }
+        .grid-cols-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .nav-links a {
+            color: #3b82f6;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .nav-links a:hover {
+            background-color: #e0f2fe;
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container p-8 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-8">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                Prédicteur de Désabonnement Client
+            </span>
+        </h1>
+
+        <div class="nav-links">
+            <a href="/">Prédiction Individuelle</a>
+            <a href="/upload">Prédiction de Fichier</a>
+        </div>
+
+        <form action="/predict" method="post" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender" class="block text-sm mb-1">Genre</label>
+                    <select id="gender" name="gender" required class="rounded-lg">
+                        <option value="Male">Homme</option>
+                        <option value="Female">Femme</option>
+                    </select>
+                </div>
+
+                <!-- Senior Citizen -->
+                <div class="form-group">
+                    <label for="SeniorCitizen" class="block text-sm mb-1">Citoyen Senior</label>
+                    <select id="SeniorCitizen" name="SeniorCitizen" required class="rounded-lg">
+                        <option value="0">Non</option>
+                        <option value="1">Oui</option>
+                    </select>
+                </div>
+
+                <!-- Partner -->
+                <div class="form-group">
+                    <label for="Partner" class="block text-sm mb-1">Partenaire</label>
+                    <select id="Partner" name="Partner" required class="rounded-lg">
+                        <option value="Yes">Oui</option>
+                        <option value="No">Non</option>
+                    </select>
+                </div>
+
+                <!-- Dependents -->
+                <div class="form-group">
+                    <label for="Dependents" class="block text-sm mb-1">Personnes à charge</label>
+                    <select id="Dependents" name="Dependents" required class="rounded-lg">
+                        <option value="Yes">Oui</option>
+                        <option value="No">Non</option>
+                    </select>
+                </div>
+
+                <!-- Tenure -->
+                <div class="form-group">
+                    <label for="tenure" class="block text-sm mb-1">Ancienneté (mois)</label>
+                    <input type="number" id="tenure" name="tenure" min="0" required class="rounded-lg" placeholder="Ex: 24">
+                </div>
+
+                <!-- PhoneService -->
+                <div class="form-group">
+                    <label for="PhoneService" class="block text-sm mb-1">Service Téléphonique</label>
+                    <select id="PhoneService" name="PhoneService" required class="rounded-lg">
+                        <option value="Yes">Oui</option>
+                        <option value="No">Non</option>
+                    </select>
+                </div>
+
+                <!-- MultipleLines -->
+                <div class="form-group">
+                    <label for="MultipleLines" class="block text-sm mb-1">Lignes Multiples</label>
+                    <select id="MultipleLines" name="MultipleLines" required class="rounded-lg">
+                        <option value="No phone service">Pas de service téléphonique</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- InternetService -->
+                <div class="form-group">
+                    <label for="InternetService" class="block text-sm mb-1">Service Internet</label>
+                    <select id="InternetService" name="InternetService" required class="rounded-lg">
+                        <option value="DSL">DSL</option>
+                        <option value="Fiber optic">Fibre Optique</option>
+                        <option value="No">Non</option>
+                    </select>
+                </div>
+
+                <!-- OnlineSecurity -->
+                <div class="form-group">
+                    <label for="OnlineSecurity" class="block text-sm mb-1">Sécurité en Ligne</label>
+                    <select id="OnlineSecurity" name="OnlineSecurity" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- OnlineBackup -->
+                <div class="form-group">
+                    <label for="OnlineBackup" class="block text-sm mb-1">Sauvegarde en Ligne</label>
+                    <select id="OnlineBackup" name="OnlineBackup" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- DeviceProtection -->
+                <div class="form-group">
+                    <label for="DeviceProtection" class="block text-sm mb-1">Protection des Appareils</label>
+                    <select id="DeviceProtection" name="DeviceProtection" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- TechSupport -->
+                <div class="form-group">
+                    <label for="TechSupport" class="block text-sm mb-1">Support Technique</label>
+                    <select id="TechSupport" name="TechSupport" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- StreamingTV -->
+                <div class="form-group">
+                    <label for="StreamingTV" class="block text-sm mb-1">TV en Streaming</label>
+                    <select id="StreamingTV" name="StreamingTV" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- StreamingMovies -->
+                <div class="form-group">
+                    <label for="StreamingMovies" class="block text-sm mb-1">Films en Streaming</label>
+                    <select id="StreamingMovies" name="StreamingMovies" required class="rounded-lg">
+                        <option value="No internet service">Pas de service internet</option>
+                        <option value="No">Non</option>
+                        <option value="Yes">Oui</option>
+                    </select>
+                </div>
+
+                <!-- Contract -->
+                <div class="form-group">
+                    <label for="Contract" class="block text-sm mb-1">Contrat</label>
+                    <select id="Contract" name="Contract" required class="rounded-lg">
+                        <option value="Month-to-month">Mois par mois</option>
+                        <option value="One year">Un an</option>
+                        <option value="Two year">Deux ans</option>
+                    </select>
+                </div>
+
+                <!-- PaperlessBilling -->
+                <div class="form-group">
+                    <label for="PaperlessBilling" class="block text-sm mb-1">Facturation sans papier</label>
+                    <select id="PaperlessBilling" name="PaperlessBilling" required class="rounded-lg">
+                        <option value="Yes">Oui</option>
+                        <option value="No">Non</option>
+                    </select>
+                </div>
+
+                <!-- PaymentMethod -->
+                <div class="form-group">
+                    <label for="PaymentMethod" class="block text-sm mb-1">Méthode de paiement</label>
+                    <select id="PaymentMethod" name="PaymentMethod" required class="rounded-lg">
+                        <option value="Electronic check">Chèque électronique</option>
+                        <option value="Mailed check">Chèque envoyé</option>
+                        <option value="Bank transfer (automatic)">Virement bancaire (automatique)</option>
+                        <option value="Credit card (automatic)">Carte de crédit (automatique)</option>
+                    </select>
+                </div>
+
+                <!-- MonthlyCharges -->
+                <div class="form-group">
+                    <label for="MonthlyCharges" class="block text-sm mb-1">Frais Mensuels</label>
+                    <input type="number" step="0.01" id="MonthlyCharges" name="MonthlyCharges" required class="rounded-lg" placeholder="Ex: 50.50">
+                </div>
+
+                <!-- TotalCharges -->
+                <div class="form-group">
+                    <label for="TotalCharges" class="block text-sm mb-1">Frais Totaux</label>
+                    <input type="number" step="0.01" id="TotalCharges" name="TotalCharges" required class="rounded-lg" placeholder="Ex: 1200.75">
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-8">
+                <button type="submit" class="btn-submit px-8 py-3 text-lg rounded-full focus:outline-none focus:ring-4 focus:ring-green-300">
+                    Prédire le Désabonnement
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

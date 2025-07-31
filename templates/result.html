@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat de la Prédiction</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .result-text {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 800; /* font-extrabold */
+            margin-bottom: 1.5rem;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .result-churn {
+            background-image: linear-gradient(to right, #ef4444, #dc2626); /* Red gradient */
+        }
+        .result-no-churn {
+            background-image: linear-gradient(to right, #4ade80, #22c55e); /* Green gradient */
+        }
+        .probability-text {
+            font-size: 1.5rem; /* text-2xl */
+            color: #4a5568; /* Gray-700 */
+            margin-bottom: 2rem;
+        }
+        .btn-back {
+            background-image: linear-gradient(to right, #60a5fa, #3b82f6); /* Blue gradient */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container p-8 rounded-xl shadow-lg">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-6">
+            Résultat de la Prédiction
+        </h1>
+
+        {% if churn_result == "Oui" %}
+            <p class="result-text result-churn">
+                Le client va probablement <br> se désabonner !
+            </p>
+        {% elif churn_result == "Non" %}
+            <p class="result-text result-no-churn">
+                Le client ne va probablement pas <br> se désabonner.
+            </p>
+        {% else %}
+            <p class="text-red-600 text-2xl font-semibold mb-4">
+                {{ churn_result }}
+            </p>
+        {% endif %}
+
+        <p class="probability-text">
+            Probabilité de désabonnement : <span class="font-bold text-gray-900">{{ probability }}</span>
+        </p>
+
+        <a href="/" class="btn-back px-6 py-3 text-lg rounded-full focus:outline-none focus:ring-4 focus:ring-blue-300">
+            Faire une nouvelle prédiction
+        </a>
+    </div>
+</body>
+</html>
