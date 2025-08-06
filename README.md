@@ -39,6 +39,7 @@ Pour démarrer une version locale du projet, suivez ces étapes :
     python app.py
     ```
     L'application sera disponible à l'adresse `http://127.0.0.1:5000`.
+    
 
 ## 🧠 Le Modèle de Machine Learning
 
