@@ -22,19 +22,13 @@ Ce projet présente une application web Flask qui prédit le désabonnement (chu
 
 Pour démarrer une version locale du projet, suivez ces étapes :
 
-1.  **Cloner le dépôt :**
-    ```bash
-    git clone [https://github.com/votre-nom/votre-repo.git](https://github.com/votre-nom/votre-repo.git)
-    cd votre-repo
-    ```
-
-2.  **Installer les dépendances :**
+1.  **Installer les dépendances :**
     Assurez-vous que `pip` est à jour et que vous êtes dans un environnement virtuel.
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **Lancer l'application :**
+2.  **Lancer l'application :**
     ```bash
     python app.py
     ```
@@ -52,6 +46,10 @@ Le modèle sérialisé est sauvegardé dans le fichier `churn_prediction_model.p
 <img width="1628" height="850" alt="Capture d’écran 2025-08-06 152031" src="https://github.com/user-attachments/assets/ca0489d8-fe5b-486f-a8cb-5ca6ad6f98d9" />
 
 <img width="1315" height="612" alt="Capture d’écran 2025-08-06 152102" src="https://github.com/user-attachments/assets/646741da-bace-402e-978c-2655d8c6ba33" />
+
+
+<img width="1563" height="873" alt="image" src="https://github.com/user-attachments/assets/41a94e55-fd24-4550-b3af-0fd0bb297f4b" />
+
 
 
 
