@@ -47,11 +47,13 @@ Le modèle est un `RandomForestClassifier` (ou un autre modèle que vous avez ch
 
 Le modèle sérialisé est sauvegardé dans le fichier `churn_prediction_model.pkl`.
 
-## 🌐 Déploiement
 
-Cette application est déployée sur Heroku et accessible en ligne :
+##  Quelques captures d'images du projet
+<img width="1628" height="850" alt="Capture d’écran 2025-08-06 152031" src="https://github.com/user-attachments/assets/ca0489d8-fe5b-486f-a8cb-5ca6ad6f98d9" />
 
-[https://votre-app-heroku.herokuapp.com](https://votre-app-heroku.herokuapp.com)
+<img width="1315" height="612" alt="Capture d’écran 2025-08-06 152102" src="https://github.com/user-attachments/assets/646741da-bace-402e-978c-2655d8c6ba33" />
+
+
 
 ## ✍️ Auteur
 
